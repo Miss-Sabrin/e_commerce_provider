@@ -10,6 +10,8 @@ class ProductCart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double screanHeight=MediaQuery.of(context).size.height;
+    double screanWidth=MediaQuery.of(context).size.width;
     final provider=FavoriteProvider.of(context);
     return  GestureDetector(
       onTap: (){
@@ -19,6 +21,7 @@ class ProductCart extends StatelessWidget {
         children: [
           Container(
             width: double.infinity,
+            height: screanHeight *5,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(20),
               color: kcontentColor
@@ -26,11 +29,11 @@ class ProductCart extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(height: 20,),
+                SizedBox(height: 5,),
                 Center(child: Hero(
                   tag: product.image,
-                  child: Image.asset(product.image,width: 120,height: 120,fit: BoxFit.cover,)),),
-                SizedBox(height: 10,),
+                  child: Image.asset(product.image,scale: 1.0,width: 130,height: 130,fit: BoxFit.cover,)),),
+                SizedBox(height: 5,),
                 Padding(padding: EdgeInsets.only(left: 10),
                 child: Text(product.title,
                 style: TextStyle(fontSize: 13,
@@ -55,6 +58,7 @@ class ProductCart extends StatelessWidget {
                           decoration:BoxDecoration(
                             color: product.colors[index],
                             shape: BoxShape.circle
+                          
                           ) ,
                         )
                        )

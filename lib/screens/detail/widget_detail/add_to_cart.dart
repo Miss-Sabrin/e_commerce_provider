@@ -19,12 +19,12 @@ class _AddToCartState extends State<AddToCart> {
     //todo provider 
     final provider=CartPeovider.of(context);
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 15,vertical: 10),
+      padding: EdgeInsets.symmetric(horizontal: 5,vertical: 10),
       child: Container(
         height: 85,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(50),
-          color: Colors.black,
+          borderRadius: BorderRadius.circular(10),
+          color: kcontentColor,
 
         ),
         padding: EdgeInsets.symmetric(horizontal: 15,vertical: 10),
@@ -40,30 +40,37 @@ class _AddToCartState extends State<AddToCart> {
                 border: Border.all(color: Colors.white)
                 //color: Colors.white,            
                   ),
-                child:Row(children: [
-                  IconButton(onPressed: (){
-                    //todo remove icon
-                    if(currentIndex !=1){
-                      setState(() {
-                        currentIndex--;
-                      });
-                    }
-                  },
-           icon: Icon(Icons.remove,color: Colors.white,),),
-           SizedBox(width: 5,),
-           Text(currentIndex.toString(),style: TextStyle(fontWeight: FontWeight.bold,color: Colors.white),),
-           SizedBox(width: 5,),
-
-           //add
-            IconButton(onPressed: (){
-              //todo add icon function
-              setState(() {
-                currentIndex ++;
-              });
-            },
-           icon: Icon(Icons.add,color: Colors.white,),)
-
-                ],) ,
+                child:Container(
+                  height: 55,
+                  decoration: BoxDecoration(
+                    color: kprimarayColor,
+                    borderRadius: BorderRadius.circular(20)
+                  ),
+                  child: Row(children: [
+                    IconButton(onPressed: (){
+                      //todo remove icon
+                      if(currentIndex !=1){
+                        setState(() {
+                          currentIndex--;
+                        });
+                      }
+                    },
+                             icon: Icon(Icons.remove,color: Colors.white,),),
+                             SizedBox(width: 5,),
+                             Text(currentIndex.toString(),style: TextStyle(fontWeight: FontWeight.bold,color: Colors.white),),
+                             SizedBox(width: 5,),
+                  
+                             //add
+                              IconButton(onPressed: (){
+                                //todo add icon function
+                                setState(() {
+                  currentIndex ++;
+                                });
+                              },
+                             icon: Icon(Icons.add,color: Colors.white,),)
+                  
+                  ],),
+                ) ,
 
             ),
             GestureDetector(
@@ -88,12 +95,12 @@ class _AddToCartState extends State<AddToCart> {
                 height: 55,
                 decoration: BoxDecoration(
                   color: kprimarayColor,
-                  borderRadius: BorderRadius.circular(50),
+                  borderRadius: BorderRadius.circular(20),
 
                 ),
                 alignment: Alignment.center,
-                padding: EdgeInsets.symmetric(horizontal: 50),
-                child: Text('add to cart',style: TextStyle(fontSize: 20,
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                child: Text('Bay now',style: TextStyle(fontSize: 20,
                 color: Colors.white,fontWeight: FontWeight.bold),),
               ),
             )

@@ -23,10 +23,7 @@ class _DetailScreenState extends State<DetailScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: kcontentColor,
-      //for add to cart icon and quantity
-      floatingActionButton: AddToCart(product:widget.product),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      body: SafeArea(child: SingleChildScrollView(
+            body: SafeArea(child: SingleChildScrollView(
         child: Column(
           children: [
             //for back  button  share and fovarite
@@ -118,7 +115,8 @@ class _DetailScreenState extends State<DetailScreen> {
                   //for description
                   Description(text: widget.product.description),
                   SizedBox(height: 10,),
-                 // AddToCart(product: widget.product)
+
+                  AddToCart(product: widget.product)
 
               ],),
             )

@@ -10,7 +10,7 @@ class ImageSlider extends StatelessWidget {
     return Stack(
       children: [
         SizedBox(
-          height: 220,
+          height: 150,
           width: double.infinity,
           child: ClipRRect(
             borderRadius: BorderRadius.circular(15),

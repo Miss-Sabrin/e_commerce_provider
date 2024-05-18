@@ -35,6 +35,7 @@ class DetailAppBar extends StatelessWidget {
           onPressed: (){},
           icon: Icon(Icons.share_outlined,size: 20,)
          ),
+         SizedBox(width: 10,),
           IconButton(
           style: IconButton.styleFrom(
            backgroundColor: Colors.white,
