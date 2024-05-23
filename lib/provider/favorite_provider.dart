@@ -1,11 +1,12 @@
 import 'package:e_commerce_provider/model/prodect_model.dart';
+import 'package:e_commerce_provider/model/product.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 class FavoriteProvider extends ChangeNotifier{
-  final List <ProductModel> _favorite=[];
-  List<ProductModel> get favorite=>_favorite;
+  final List <Product> _favorite=[];
+  List<Product> get favorite=>_favorite;
 
-  void toggleFavorite(ProductModel product){
+  void toggleFavorite(Product product){
     if(_favorite.contains(product)){
       favorite.remove(product);
       
@@ -15,7 +16,7 @@ class FavoriteProvider extends ChangeNotifier{
     notifyListeners();
   }
 
-bool isExist(ProductModel product){
+bool isExist(Product product){
   final isExist=favorite.contains(product);
   return isExist;
 }
