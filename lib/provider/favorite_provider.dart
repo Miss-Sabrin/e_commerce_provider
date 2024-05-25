@@ -3,7 +3,7 @@ import 'package:e_commerce_provider/model/product.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 class FavoriteProvider extends ChangeNotifier{
-  final List <Product> _favorite=[];
+  final List <Product> _favorite = [];
   List<Product> get favorite=>_favorite;
 
   void toggleFavorite(Product product){

@@ -25,6 +25,7 @@ class _DetailScreenState extends State<DetailScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomSheet: AddToCart(product: widget.product),
       backgroundColor: kcontentColor,
       body: SafeArea(
           child: SingleChildScrollView(
@@ -128,7 +129,7 @@ class _DetailScreenState extends State<DetailScreen> {
                     height: 10,
                   ),
 
-                  AddToCart(product: widget.product)
+                  // AddToCart(product: widget.product)
                 ],
               ),
             )

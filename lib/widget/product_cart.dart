@@ -1,9 +1,12 @@
 import 'package:e_commerce_provider/model/prodect_model.dart';
 import 'package:e_commerce_provider/model/product.dart';
+import 'package:e_commerce_provider/provider/cart_peovider.dart';
 import 'package:e_commerce_provider/provider/favorite_provider.dart';
 import 'package:e_commerce_provider/screens/constant.dart';
 import 'package:e_commerce_provider/screens/detail/detail.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:iconly/iconly.dart';
 
 class ProductCart extends StatelessWidget {
   Product product;
@@ -13,7 +16,8 @@ class ProductCart extends StatelessWidget {
   Widget build(BuildContext context) {
     double screanHeight = MediaQuery.of(context).size.height;
     double screanWidth = MediaQuery.of(context).size.width;
-    final provider = FavoriteProvider.of(context);
+    // final provider = FavoriteProvider.of(context);
+    final provider = CartPeovider.of(context);
     return GestureDetector(
       onTap: () {
         Navigator.push(
@@ -106,12 +110,13 @@ class ProductCart extends StatelessWidget {
               ),
               child: GestureDetector(
                 onTap: () {
-                  provider.toggleFavorite(product);
+                  provider.addToCart(product);
                 },
                 child: Icon(
-                  provider.isExist(product)
-                      ? Icons.favorite
-                      : Icons.favorite_border,
+                  // provider.isExist(product)
+                  //     ? Icons.favorite
+                  //     :
+                  FontAwesomeIcons.cartShopping,
                   color: Colors.white,
                   size: 22,
                 ),

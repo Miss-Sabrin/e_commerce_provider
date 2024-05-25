@@ -1,11 +1,17 @@
+import 'dart:async';
+
+import 'package:after_layout/after_layout.dart';
 import 'package:e_commerce_provider/provider/category_provider.dart';
+import 'package:e_commerce_provider/provider/order_provider.dart';
 import 'package:e_commerce_provider/provider/product.dart';
+import 'package:e_commerce_provider/provider/user.dart';
 import 'package:e_commerce_provider/screens/category/category_view_page.dart';
 import 'package:e_commerce_provider/widget/home_app_bar.dart';
 import 'package:e_commerce_provider/widget/image_slider.dart';
 import 'package:e_commerce_provider/widget/product_cart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
 
 class Home extends StatefulWidget {
@@ -15,21 +21,23 @@ class Home extends StatefulWidget {
   State<Home> createState() => _HomeState();
 }
 
-class _HomeState extends State<Home> {
+class _HomeState extends State<Home> with AfterLayoutMixin {
   int currentSlide = 0;
   int selectedIndex = 0;
 
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      Provider.of<ProductProvider>(context, listen: false).fetchAllProducts();
-      // Provider.of<ProductProvider>(context, listen: false)
-      //     .fetchProductsByCategory('664ef1e847ebed68b6987f0f');
-      Provider.of<CategoryProvider>(context, listen: false)
-          .fetchAllCategories();
-    });
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   WidgetsBinding.instance.addPostFrameCallback((_) {
+  //     Provider.of<ProductProvider>(context, listen: false).fetchAllProducts();
+  //     // Provider.of<ProductProvider>(context, listen: false)
+  //     //     .fetchProductsByCategory('664ef1e847ebed68b6987f0f');
+  //     Provider.of<CategoryProvider>(context, listen: false)
+  //         .fetchAllCategories();
+  //     Provider.of<OrderProvider>(context, listen: false)
+  //         .fetchOrderByUser('664de1f8a2b39d6990d807e4');
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -83,7 +91,7 @@ class _HomeState extends State<Home> {
                                 shrinkWrap: true,
                                 gridDelegate:
                                     const SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 3,
+                                  crossAxisCount: 4,
                                   crossAxisSpacing: 0.1,
                                   childAspectRatio: 0.87,
                                 ),
@@ -110,6 +118,8 @@ class _HomeState extends State<Home> {
                                       });
                                     },
                                     child: Container(
+                                      height: 60,
+                                      width: 60,
                                       padding: const EdgeInsets.all(1),
                                       decoration: BoxDecoration(
                                           borderRadius:
@@ -130,7 +140,7 @@ class _HomeState extends State<Home> {
                                               width: MediaQuery.of(context)
                                                       .size
                                                       .width /
-                                                  7,
+                                                  6,
                                               decoration: BoxDecoration(
                                                 borderRadius:
                                                     BorderRadius.circular(20),
@@ -143,13 +153,13 @@ class _HomeState extends State<Home> {
                                               ),
                                             ),
                                           ),
-                                          Expanded(
-                                            child: Text(
-                                              category.name,
-                                              style: const TextStyle(
-                                                  fontSize: 15,
-                                                  fontWeight: FontWeight.bold),
-                                            ),
+                                          Text(
+                                            category.name,
+                                            style: const TextStyle(
+                                                fontSize: 12,
+                                                fontWeight: FontWeight.normal,
+                                                overflow:
+                                                    TextOverflow.ellipsis),
                                           )
                                         ],
                                       ),
@@ -158,9 +168,7 @@ class _HomeState extends State<Home> {
                                 },
                               ),
                             ),
-                            const SizedBox(
-                              height: 10,
-                            ),
+                            const Gap(20),
 
                             // Trending Section
                             const Row(
@@ -204,5 +212,14 @@ class _HomeState extends State<Home> {
                   ),
                 ),
     );
+  }
+
+  @override
+  FutureOr<void> afterFirstLayout(BuildContext context) {
+    Provider.of<UserProvider>(context, listen: false).getUser();
+    Provider.of<ProductProvider>(context, listen: false).fetchAllProducts();
+    Provider.of<CategoryProvider>(context, listen: false).fetchAllCategories();
+    Provider.of<OrderProvider>(context, listen: false)
+        .fetchOrderByUser('664de1f8a2b39d6990d807e4');
   }
 }

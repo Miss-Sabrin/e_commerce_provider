@@ -41,6 +41,9 @@ dependencies:
   after_layout: ^1.2.0
   gap: ^3.0.1
   font_awesome_flutter: ^10.7.0
+  get_storage: ^2.1.1
+  iconly: ^1.0.1
+  page_transition: ^2.1.0
 
 dev_dependencies:
   flutter_test:

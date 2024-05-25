@@ -13,8 +13,8 @@ class CategoryServices {
       headers: {HttpHeaders.contentTypeHeader: "application/json"},
     );
 
-    log("Response status: ${response.statusCode}");
-    log("Response body: ${response.body}");
+    // log("Response status: ${response.statusCode}");
+    // log("Response body: ${response.body}");
 
     if (response.statusCode == 200) {
       try {

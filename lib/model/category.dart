@@ -15,8 +15,9 @@ class Category {
   });
 
   factory Category.fromJson(Map<String, dynamic> json) {
+    var myIp = '192.168.3.49';
     String photoUrl =
-        json['photo'].replaceFirst('localhost:7900', '192.168.100.7:5000');
+        json['photo'].replaceFirst('localhost:7900', '$myIp:5000');
     print('Original URL: ${json['photo']}');
     print('Updated URL: $photoUrl');
     return Category(

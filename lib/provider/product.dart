@@ -3,10 +3,7 @@ import 'dart:developer';
 import 'package:e_commerce_provider/model/product.dart';
 import 'package:e_commerce_provider/services/product.dart';
 import 'package:flutter/material.dart';
-import 'dart:developer';
-import 'package:e_commerce_provider/model/product.dart';
-import 'package:e_commerce_provider/services/product.dart';
-import 'package:flutter/material.dart';
+
 
 enum ProductState { normal, loading, error, success, notFound }
 

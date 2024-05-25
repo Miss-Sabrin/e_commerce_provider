@@ -1,7 +1,7 @@
 import 'package:e_commerce_provider/provider/cart_peovider.dart';
+import 'package:e_commerce_provider/provider/favorite_provider.dart';
 import 'package:e_commerce_provider/screens/cart/check_out.dart';
 import 'package:e_commerce_provider/screens/constant.dart';
-import 'package:e_commerce_provider/screens/nav_botton.dart';
 import 'package:flutter/material.dart';
 
 class CartScreen extends StatefulWidget {
@@ -16,65 +16,21 @@ class _CartScreenState extends State<CartScreen> {
   Widget build(BuildContext context) {
     final provider = CartPeovider.of(context);
     final finalList = provider.cart;
-    //todo for quantity
-    productQuantity(IconData icon, int index) {
-      return GestureDetector(
-        onTap: () {
-          setState(() {
-            icon == Icons.add
-                ? provider.incrementQuantity(index)
-                : provider.decrementQuantity(index);
-          });
-        },
-        child: Icon(
-          icon,
-          size: 20,
-        ),
-      );
-    }
 
     return Scaffold(
-      //todo for total check out caled
-      bottomSheet: CheckOutBox(),
-      backgroundColor: kcontentColor,
-      body: SafeArea(
-          child: Column(
+      appBar: AppBar(
+        title: const Text('Cart'),
+        centerTitle: true,
+      ),
+      bottomSheet: const CheckOutBox(),
+      body: Column(
         children: [
-          Padding(
-            padding: EdgeInsets.all(8),
-            child: Row(
-              children: [
-                IconButton(
-                    style: IconButton.styleFrom(
-                        backgroundColor: Colors.white,
-                        padding: EdgeInsets.all(20)),
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const BottomNvbar(),
-                          ));
-                    },
-                    icon: Icon(
-                      Icons.arrow_back,
-                      size: 20,
-                    )),
-                Text(
-                  'my cart',
-                  style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
-                ),
-                Container()
-              ],
-            ),
-
-            ///todo cart provider
-          ),
           Expanded(
             child: ListView.builder(
               scrollDirection: Axis.vertical,
               itemCount: finalList.length,
               itemBuilder: (BuildContext context, int index) {
-                //todo making cart item
+                // Getting the cart item
                 final cartItem = finalList[index];
                 return Stack(
                   children: [
@@ -113,91 +69,65 @@ class _CartScreenState extends State<CartScreen> {
                                   height: 6,
                                 ),
                                 Text(
-                                  cartItem.category as String,
-                                  style: TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.grey),
-                                ),
-                                SizedBox(
-                                  height: 6,
-                                ),
-                                Text(
                                   '\$${cartItem.price}',
                                   style: TextStyle(
                                       fontSize: 14,
                                       fontWeight: FontWeight.bold,
                                       color: Colors.black),
                                 ),
+                                SizedBox(
+                                  height: 6,
+                                ),
+                                // Quantity controls
+                                Row(
+                                  children: [
+                                    IconButton(
+                                      icon: Icon(Icons.remove),
+                                      onPressed: () {
+                                        provider.decrementQuantity(index);
+                                      },
+                                    ),
+                                    Text(
+                                      provider.quantity.toString(),
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.black),
+                                    ),
+                                    IconButton(
+                                      icon: Icon(Icons.add),
+                                      onPressed: () {
+                                        provider.incrementQuantity(index);
+                                      },
+                                    ),
+                                  ],
+                                ),
                               ],
-                            )
+                            ),
+                            Spacer(),
+                            Column(
+                              children: [
+                                IconButton(
+                                  onPressed: () {
+                                    // provider.removeProduct(index);
+                                  },
+                                  icon: Icon(
+                                    Icons.delete,
+                                    color: Colors.red,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ],
                         ),
                       ),
                     ),
-                    Positioned(
-                        top: 35,
-                        right: 35,
-                        child: Column(
-                          children: [
-                            IconButton(
-                                onPressed: () {
-                                  finalList.removeAt(index);
-                                  setState(() {});
-                                },
-                                icon: Icon(
-                                  Icons.delete,
-                                  color: Colors.red,
-                                )),
-
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            //todo add and remove icons
-                            Container(
-                              decoration: BoxDecoration(
-                                  color: kcontentColor,
-                                  border:
-                                      Border.all(color: Colors.grey.shade200),
-                                  borderRadius: BorderRadius.circular(10)),
-                              child: Row(
-                                children: [
-                                  SizedBox(
-                                    width: 10,
-                                  ),
-                                  productQuantity(Icons.add, index),
-                                  SizedBox(
-                                    width: 10,
-                                  ),
-                                  Text(
-                                    cartItem.units.toString(),
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.black),
-                                  ),
-                                  SizedBox(
-                                    width: 10,
-                                  ),
-                                  productQuantity(Icons.remove, index),
-                                  SizedBox(
-                                    width: 10,
-                                  ),
-                                ],
-                              ),
-                            )
-                          ],
-                        ))
                   ],
                 );
               },
             ),
           )
         ],
-      )),
+      ),
     );
   }
 }
-
-///we used the provider state management to show the add to car items
-// when user click on add to cart
-//and same as favorite

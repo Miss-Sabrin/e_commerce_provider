@@ -1,5 +1,5 @@
 import 'dart:convert';
-
+import 'dart:ui';
 import 'package:e_commerce_provider/model/category.dart';
 import 'package:flutter/material.dart';
 
@@ -7,9 +7,10 @@ String replaceLocalhostWithIP(String url) {
   if (!url.contains('http://') && !url.contains('https://')) {
     url = 'http://' + url;
   }
+  var myIp = '192.168.3.49';
   return url
-      .replaceAll('http://localhost:7900/', 'http://192.168.100.7:5000/')
-      .replaceAll('https://localhost:7900/', 'https://192.168.100.7:5000/')
+      .replaceAll('http://localhost:7900/', 'http://$myIp:5000/')
+      .replaceAll('https://localhost:7900/', 'https://$myIp:5000/')
       .replaceAll('//public', '/public');
 }
 

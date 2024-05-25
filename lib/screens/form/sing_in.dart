@@ -1,121 +1,155 @@
+import 'package:e_commerce_provider/provider/user.dart';
+
 import 'package:e_commerce_provider/screens/constant.dart';
 import 'package:e_commerce_provider/screens/form/sing_up.dart';
 import 'package:e_commerce_provider/screens/nav_botton.dart';
+import 'package:e_commerce_provider/utils/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
+import 'package:iconly/iconly.dart';
+import 'package:page_transition/page_transition.dart';
+import 'package:provider/provider.dart';
 
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
 
-class SignInPage extends StatefulWidget {
   @override
-  _SignInPageState createState() => _SignInPageState();
+  State<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _SignInPageState extends State<SignInPage> {
-  final _formKey = GlobalKey<FormState>();
-  final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
+class _LoginScreenState extends State<LoginScreen> {
+  TextEditingController username = TextEditingController();
+  TextEditingController password = TextEditingController();
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    username.dispose();
+    password.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text("Sign in"),
+      ),
       body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(30),
-                  child: Column(
-                    children: [
-                      Icon(Icons.person,size: 100,),
-                      Text('welcome to sing in',style: TextStyle(fontSize: 28,fontWeight: FontWeight.bold),),
-                      Text('.......',style: TextStyle(fontSize: 20),)
-                    ],
-                  ),
-                   
-                ),
-                Container(
-                  margin: EdgeInsets.symmetric(vertical: 100,horizontal: 20),
-                  child: Form(
-                    key: _formKey,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: TextFormField(
-                            controller: _emailController,
-                            decoration: InputDecoration(labelText: 'Email'),
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Please enter an email';
-                              }
-                              if (!RegExp(r'\S+@\S+\.\S+').hasMatch(value)) {
-                                return 'Please enter a valid email address';
-                              }
-                              return null;
-                            },
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: TextFormField(
-                            controller: _passwordController,
-                            decoration: InputDecoration(labelText: 'Password'),
-                            obscureText: true,
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Please enter a password';
-                              }
-                              return null;
-                            },
-                          ),
-                        ),
-                         Align(
-                          alignment: Alignment.centerRight,
-                           child: TextButton(
-                            onPressed: () {
-                              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => SignUpPage()));
-                            },
-                            child: Text("Don't have an account? ",style: TextStyle(
-                              fontWeight: FontWeight.bold,color: Colors.black54
-                            ),),
-                                                 ),
-                         ),
-                        SizedBox(height: 20,),
-                        Container(
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            color: kprimarayColor
-                          ),
-                          height: 50,
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: kprimarayColor
-                            ),
-                            onPressed: () {
-                              if (_formKey.currentState!.validate()) {
-                                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => BottomNvbar()));
-                              }
-                            },
-                            child: Text('Sign In',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: Colors.white),),
-                          ),
-                        ),
-                         TextButton(
-                          onPressed: () {
-                            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => SignUpPage()));
-                          },
-                          child: Text("Forget password"),
-                        )
-                       
-                      ],
-                    ),
-                  ),
-                ),
-              ],
+        child: Column(children: [
+          const Gap(16),
+          const Center(
+            child: SizedBox(
+              width: 100,
+              height: 100,
+              child: Placeholder(),
             ),
-          ],
-        ),
+          ),
+          const Gap(kPadding),
+          const Text(
+            "WELCOME BACK!",
+            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+          ),
+          const Gap(8),
+          const Text(
+            "Please enter your credentials to sign in",
+            style: TextStyle(
+                // fontSize: 24,
+
+                ),
+          ),
+          const Gap(kPadding),
+          Container(
+            width: 80,
+            height: 5,
+            decoration: const BoxDecoration(color: kPrimaryColor),
+          ),
+          const Gap(kPadding),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: kPadding),
+            child: TextField(
+              controller: username,
+              decoration: const InputDecoration(
+                  hintText: "Username",
+                  hintStyle: TextStyle(fontWeight: FontWeight.w300),
+                  prefixIcon: Icon(
+                    IconlyBold.profile,
+                    color: kPrimaryColor,
+                  )),
+            ),
+          ),
+          const Gap(kPadding * 2),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: kPadding),
+            child: TextField(
+              controller: password,
+              obscureText: true,
+              decoration: const InputDecoration(
+                  hintText: "Password",
+                  hintStyle: TextStyle(fontWeight: FontWeight.w300),
+                  prefixIcon: Icon(
+                    IconlyBold.lock,
+                    color: kPrimaryColor,
+                  )),
+            ),
+          ),
+          const Gap(8),
+          Align(
+            alignment: Alignment.topRight,
+            child: TextButton(
+              onPressed: () => Navigator.push(
+                context,
+                PageTransition(
+                    child: SignUpPage(), type: PageTransitionType.fade),
+              ),
+              child: const Text(
+                "Don't have an account?",
+                style: TextStyle(color: kPrimaryColor),
+              ),
+            ),
+          ),
+          const Gap(kPadding),
+          Consumer<UserProvider>(builder: (context, cont, child) {
+            return Container(
+              margin: const EdgeInsets.symmetric(horizontal: kPadding),
+              width: double.infinity,
+              height: 55,
+              child: ElevatedButton(
+                  onPressed: cont.loginState == LoginState.loading
+                      ? null
+                      : () => cont.login(
+                          username: username.text,
+                          password: password.text,
+                          onSuccess: (user) {
+                            password.clear();
+                            Navigator.pushAndRemoveUntil(
+                                context,
+                                PageTransition(
+                                    child: const BottomNvbar(),
+                                    type: PageTransitionType.fade),
+                                (route) => false);
+                          },
+                          onError: (error) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(
+                                  error.toString(),
+                                ),
+                              ),
+                            );
+                          }),
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: kPrimaryColor,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8))),
+                  child: cont.loginState == LoginState.loading
+                      ? const CircularProgressIndicator()
+                      : const Text(
+                          "Sign in",
+                          style: TextStyle(color: Colors.white),
+                        )),
+            );
+          })
+        ]),
       ),
     );
   }
