@@ -20,7 +20,7 @@ class OrderServices {
 
       for (var order in orders) {
         for (var product in order.products) {
-          log('Product name: ${product.product?.name}');
+          log('Product name: ${product.product.name}');
         }
       }
 
@@ -38,11 +38,21 @@ class OrderServices {
       body: jsonEncode(orderData),
     );
 
-    if (response.statusCode == 201) {
-      final body = jsonDecode(response.body);
-      return Order.fromJson(body);
-    } else {
-      throw Exception('Failed to create order');
+    try {
+      if (response.statusCode == 201) {
+        final body = jsonDecode(response.body);
+        return Order.fromJson(body);
+      } else {
+        final body = jsonDecode(response.body);
+        if (body['status'] == 'failed') {
+          throw Exception(body['message']);
+        } else {
+          throw Exception('Failed to create order');
+        }
+      }
+    } catch (e) {
+      log("$e");
+      rethrow;
     }
   }
 }

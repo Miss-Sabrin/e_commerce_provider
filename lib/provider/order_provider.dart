@@ -8,6 +8,8 @@ enum OrderState { normal, loading, error, success }
 class OrderProvider extends ChangeNotifier {
   List<Order> orders = [];
   OrderState state = OrderState.normal;
+  String errorMessage = '';
+  String successMessage = '';
 
   Future<void> fetchOrderByUser(String userId) async {
     if (orders.isNotEmpty) return;
@@ -19,6 +21,7 @@ class OrderProvider extends ChangeNotifier {
       orders = userOrders;
       // _ordersFetched = true;
       state = OrderState.success;
+      successMessage = 'Successfully made an order';
       notifyListeners();
     } catch (e) {
       state = OrderState.error;
@@ -27,31 +30,16 @@ class OrderProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> createOrder(
-      String userId,
-      String paymentId,
-      List<Map<String, dynamic>> products,
-      String note,
-      double total,
-      int phone) async {
+  Future<void> createOrder(Map<String, dynamic> orderData) async {
     try {
       state = OrderState.loading;
       notifyListeners();
-      final order = {
-        "user": userId,
-        "payment": paymentId,
-        "products": products,
-        "note": note,
-        "total": total,
-        "phone": phone
-      };
-      final createdOrder = await OrderServices().createOrder(order);
-      orders.add(createdOrder);
+      await OrderServices().createOrder(orderData);
       state = OrderState.success;
       notifyListeners();
     } catch (e) {
+      errorMessage = e.toString();
       state = OrderState.error;
-      log('Error on creating order: $e');
       notifyListeners();
     }
   }
