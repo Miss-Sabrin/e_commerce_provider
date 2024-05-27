@@ -1,5 +1,5 @@
+import 'package:e_commerce_provider/constanst/constants.dart';
 import 'package:e_commerce_provider/provider/user.dart';
-import 'package:e_commerce_provider/screens/constant.dart';
 import 'package:e_commerce_provider/screens/form/sing_in.dart';
 import 'package:e_commerce_provider/screens/nav_botton.dart';
 import 'package:flutter/material.dart';

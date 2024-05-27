@@ -1,5 +1,6 @@
+import 'package:e_commerce_provider/constanst/constants.dart';
 import 'package:e_commerce_provider/model/product.dart';
-import 'package:e_commerce_provider/screens/constant.dart';
+
 import 'package:e_commerce_provider/screens/detail/item_detail.dart';
 import 'package:e_commerce_provider/screens/detail/widget_detail/add_to_cart.dart';
 import 'package:e_commerce_provider/screens/detail/widget_detail/description.dart';

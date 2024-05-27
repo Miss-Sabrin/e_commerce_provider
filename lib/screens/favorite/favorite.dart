@@ -1,5 +1,4 @@
 import 'package:e_commerce_provider/provider/favorite_provider.dart';
-import 'package:e_commerce_provider/screens/constant.dart';
 import 'package:flutter/material.dart';
 
 class Favorite extends StatefulWidget {

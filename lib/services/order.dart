@@ -2,55 +2,47 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 
-import 'package:e_commerce_provider/utils/constants.dart';
+import 'package:e_commerce_provider/constanst/constants.dart';
 import 'package:http/http.dart' as http;
 import 'package:e_commerce_provider/model/order_model.dart';
 
 class OrderServices {
-  // Future<void> createOrder(Order order) async {
-  //   try {
-  //     var response = await http.patch(
-  //       Uri.parse('$kEndpoint/order/create'),
-  //       headers: {HttpHeaders.contentTypeHeader: "application/json"},
-  //       body: orderToJson(order),
-  //     );
+  Future<List<Order>> fetchOrdersByUser(String userId) async {
+    final response = await http.get(Uri.parse('$kEndpoint/order/user/$userId'),
+        headers: {HttpHeaders.contentTypeHeader: "application/json"});
 
-  //     if (response.statusCode == 200) {
-  //       log("Order created successfully: ${response.body}");
-  //     } else {
-  //       log("Failed to create order: ${response.body}");
-  //       throw "Failed to create order";
-  //     }
-  //   } catch (e) {
-  //     log("Error creating order: $e");
-  //     rethrow;
-  //   }
-  // }
+    log('orders: ${response.body}');
 
-  Future<List<Order>> getOrderByUser(String userId) async {
-    try {
-      var response = await http.get(
-        Uri.parse('$kEndpoint/order/user/$userId'),
-        headers: {HttpHeaders.contentTypeHeader: "application/json"},
-      );
+    if (response.statusCode == 200) {
+      List<dynamic> body = jsonDecode(response.body);
+      List<Order> orders =
+          body.map((dynamic item) => Order.fromJson(item)).toList();
 
-      // log("Status code: ${response.statusCode}");
-      // log("Orders Response: ${response.body}");
-
-      if (response.statusCode == 200) {
-        List<dynamic> json = jsonDecode(response.body);
-        log('Orders Decoded: $json');
-        List<Order> orders = json.map((e) {
-          // log('Order JSON: $e');
-          return Order.fromJson(e);
-        }).toList();
-        return orders;
-      } else {
-        throw "Failed to load orders";
+      for (var order in orders) {
+        for (var product in order.products) {
+          log('Product name: ${product.product?.name}');
+        }
       }
-    } catch (e) {
-      log("Error fetching orders: $e");
-      rethrow;
+
+      // log('Orders after serializations: ${orders[0]}');
+      return orders;
+    } else {
+      throw Exception('Failed to load orders');
+    }
+  }
+
+  Future<Order> createOrder(Map<String, dynamic> orderData) async {
+    final response = await http.post(
+      Uri.parse('$kEndpoint/order/create'),
+      headers: {HttpHeaders.contentTypeHeader: "application/json"},
+      body: jsonEncode(orderData),
+    );
+
+    if (response.statusCode == 201) {
+      final body = jsonDecode(response.body);
+      return Order.fromJson(body);
+    } else {
+      throw Exception('Failed to create order');
     }
   }
 }

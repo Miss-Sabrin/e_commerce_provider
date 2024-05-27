@@ -1,9 +1,10 @@
 import 'dart:developer';
 
+import 'package:e_commerce_provider/constanst/constants.dart';
 import 'package:e_commerce_provider/model/prodect_model.dart';
 import 'package:e_commerce_provider/model/product.dart';
 import 'package:e_commerce_provider/provider/cart_peovider.dart';
-import 'package:e_commerce_provider/screens/constant.dart';
+
 import 'package:flutter/material.dart';
 
 class AddToCart extends StatefulWidget {
@@ -20,7 +21,7 @@ class _AddToCartState extends State<AddToCart> {
   @override
   Widget build(BuildContext context) {
     //todo provider
-    final provider = CartPeovider.of(context);
+    final provider = CartProvider.of(context);
     return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
         child: Container(

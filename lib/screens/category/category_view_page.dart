@@ -19,7 +19,7 @@ class CategoryViewPage extends StatelessWidget {
           ? const Center(child: CircularProgressIndicator())
           : productProvider.state == ProductState.error
               ? const Center(child: Text("Error fetching products"))
-              : Center(
+              :  Center(
                   child: SizedBox(
                     child: ListView.builder(
                       itemCount: productProvider.productsByCategory.length,

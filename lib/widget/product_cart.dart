@@ -1,12 +1,11 @@
-import 'package:e_commerce_provider/model/prodect_model.dart';
+import 'package:e_commerce_provider/constanst/constants.dart';
+
 import 'package:e_commerce_provider/model/product.dart';
 import 'package:e_commerce_provider/provider/cart_peovider.dart';
-import 'package:e_commerce_provider/provider/favorite_provider.dart';
-import 'package:e_commerce_provider/screens/constant.dart';
+
 import 'package:e_commerce_provider/screens/detail/detail.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:iconly/iconly.dart';
 
 class ProductCart extends StatelessWidget {
   Product product;
@@ -17,15 +16,17 @@ class ProductCart extends StatelessWidget {
     double screanHeight = MediaQuery.of(context).size.height;
     double screanWidth = MediaQuery.of(context).size.width;
     // final provider = FavoriteProvider.of(context);
-    final provider = CartPeovider.of(context);
+    final provider = CartProvider.of(context);
     return GestureDetector(
       onTap: () {
         Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => DetailScreen(
-                      product: product,
-                    )));
+          context,
+          MaterialPageRoute(
+            builder: (context) => DetailScreen(
+              product: product,
+            ),
+          ),
+        );
       },
       child: Stack(
         children: [
@@ -37,7 +38,7 @@ class ProductCart extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(
+                const SizedBox(
                   height: 5,
                 ),
                 Center(
@@ -51,17 +52,18 @@ class ProductCart extends StatelessWidget {
                         fit: BoxFit.cover,
                       )),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 5,
                 ),
                 Padding(
-                  padding: EdgeInsets.only(left: 10),
+                  padding: const EdgeInsets.only(left: 10),
                   child: Text(
                     product.name ?? '',
-                    style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
+                    style: const TextStyle(
+                        fontSize: 13, fontWeight: FontWeight.bold),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 Row(
@@ -69,7 +71,7 @@ class ProductCart extends StatelessWidget {
                   children: [
                     Text(
                       "\$${product.price}",
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 17,
                         fontWeight: FontWeight.bold,
                       ),
@@ -101,7 +103,7 @@ class ProductCart extends StatelessWidget {
             child: Container(
               height: 40,
               width: 40,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: kprimarayColor,
                 borderRadius: BorderRadius.only(
                   topRight: Radius.circular(20),
@@ -112,7 +114,7 @@ class ProductCart extends StatelessWidget {
                 onTap: () {
                   provider.addToCart(product);
                 },
-                child: Icon(
+                child: const Icon(
                   // provider.isExist(product)
                   //     ? Icons.favorite
                   //     :

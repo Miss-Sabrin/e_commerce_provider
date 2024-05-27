@@ -1,6 +1,6 @@
 import 'package:e_commerce_provider/model/user_model.dart';
 import 'package:e_commerce_provider/services/user.dart';
-import 'package:e_commerce_provider/utils/constants.dart';
+import 'package:e_commerce_provider/constanst/constants.dart';
 
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
@@ -72,6 +72,8 @@ class UserProvider extends ChangeNotifier {
       final json = box.read(kUserInfo);
       if (json != null) {
         user = UserModel.fromJson(json);
+        var userId = user.id;
+        print('UserId In side UserProvider: $userId');
         notifyListeners();
       }
     }

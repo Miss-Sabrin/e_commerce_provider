@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:e_commerce_provider/utils/constants.dart';
+import 'package:e_commerce_provider/constanst/constants.dart';
 
 UserModel userModelFromJson(String str) => UserModel.fromJson(json.decode(str));
 

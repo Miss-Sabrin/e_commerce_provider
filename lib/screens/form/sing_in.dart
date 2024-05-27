@@ -1,10 +1,11 @@
 import 'package:e_commerce_provider/provider/user.dart';
 
-import 'package:e_commerce_provider/screens/constant.dart';
+
 import 'package:e_commerce_provider/screens/form/sing_up.dart';
 import 'package:e_commerce_provider/screens/nav_botton.dart';
-import 'package:e_commerce_provider/utils/constants.dart';
+import 'package:e_commerce_provider/constanst/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
 import 'package:iconly/iconly.dart';
 import 'package:page_transition/page_transition.dart';
@@ -41,7 +42,7 @@ class _LoginScreenState extends State<LoginScreen> {
             child: SizedBox(
               width: 100,
               height: 100,
-              child: Placeholder(),
+              child: Icon(FontAwesomeIcons.person),
             ),
           ),
           const Gap(kPadding),

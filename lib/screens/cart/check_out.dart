@@ -1,13 +1,15 @@
+import 'package:e_commerce_provider/constanst/constants.dart';
 import 'package:e_commerce_provider/provider/cart_peovider.dart';
-import 'package:e_commerce_provider/screens/constant.dart';
+import 'package:e_commerce_provider/screens/order/payment_page.dart';
 import 'package:flutter/material.dart';
 
 class CheckOutBox extends StatelessWidget {
-  const CheckOutBox({super.key});
+  final VoidCallback callback;
+  const CheckOutBox({super.key, required this.callback});
 
   @override
   Widget build(BuildContext context) {
-    final provider = CartPeovider.of(context);
+    final provider = CartProvider.of(context);
 
     return Container(
       height: 300,
@@ -106,11 +108,13 @@ class CheckOutBox extends StatelessWidget {
             height: 20,
           ),
           ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                callback();
+              },
               style: ElevatedButton.styleFrom(
                   backgroundColor: kprimarayColor,
                   minimumSize: const Size(double.infinity, 55)),
-              child: Text(
+              child: const Text(
                 'Check out',
                 style: TextStyle(
                     fontSize: 16,

@@ -12,8 +12,10 @@ class CategoryProvider extends ChangeNotifier {
 
   Future<void> fetchAllCategories() async {
     try {
-      state = CategoryState.loading;
-      notifyListeners();
+      if (categories.isEmpty) {
+        state = CategoryState.loading;
+        notifyListeners();
+      }
       var cats = await CategoryServices().getAllCategories();
       categories = cats;
       state = CategoryState.success;

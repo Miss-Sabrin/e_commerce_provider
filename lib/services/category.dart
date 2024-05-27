@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:e_commerce_provider/model/category.dart';
-import 'package:e_commerce_provider/utils/constants.dart';
+import 'package:e_commerce_provider/constanst/constants.dart';
 import 'package:http/http.dart' as http;
 
 class CategoryServices {
@@ -31,6 +31,4 @@ class CategoryServices {
       throw "Failed to load categories";
     }
   }
-
-  
 }

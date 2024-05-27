@@ -1,7 +1,7 @@
+import 'package:e_commerce_provider/constanst/constants.dart';
 import 'package:e_commerce_provider/provider/cart_peovider.dart';
-import 'package:e_commerce_provider/provider/favorite_provider.dart';
-import 'package:e_commerce_provider/screens/cart/check_out.dart';
-import 'package:e_commerce_provider/screens/constant.dart';
+
+import 'package:e_commerce_provider/screens/order/payment_page.dart';
 import 'package:flutter/material.dart';
 
 class CartScreen extends StatefulWidget {
@@ -14,7 +14,7 @@ class CartScreen extends StatefulWidget {
 class _CartScreenState extends State<CartScreen> {
   @override
   Widget build(BuildContext context) {
-    final provider = CartPeovider.of(context);
+    final provider = CartProvider.of(context);
     final finalList = provider.cart;
 
     return Scaffold(
@@ -22,7 +22,22 @@ class _CartScreenState extends State<CartScreen> {
         title: const Text('Cart'),
         centerTitle: true,
       ),
-      bottomSheet: const CheckOutBox(),
+      bottomSheet: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: ElevatedButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => PaymentPage(
+                  cartProducts: finalList,
+                ),
+              ),
+            );
+          },
+          child: const Text('Proceed to Payment'),
+        ),
+      ),
       body: Column(
         children: [
           Expanded(
@@ -35,13 +50,13 @@ class _CartScreenState extends State<CartScreen> {
                 return Stack(
                   children: [
                     Padding(
-                      padding: EdgeInsets.all(15),
+                      padding: const EdgeInsets.all(15),
                       child: Container(
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20),
                           color: Colors.white,
                         ),
-                        padding: EdgeInsets.all(20),
+                        padding: const EdgeInsets.all(20),
                         child: Row(
                           children: [
                             Container(
@@ -50,10 +65,10 @@ class _CartScreenState extends State<CartScreen> {
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(30),
                                   color: kcontentColor),
-                              padding: EdgeInsets.all(10),
+                              padding: const EdgeInsets.all(10),
                               child: Image.network(cartItem.photos![0]),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 10,
                             ),
                             Column(
@@ -61,40 +76,40 @@ class _CartScreenState extends State<CartScreen> {
                               children: [
                                 Text(
                                   cartItem.name ?? '',
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.bold),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   height: 6,
                                 ),
                                 Text(
                                   '\$${cartItem.price}',
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       fontSize: 14,
                                       fontWeight: FontWeight.bold,
                                       color: Colors.black),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   height: 6,
                                 ),
                                 // Quantity controls
                                 Row(
                                   children: [
                                     IconButton(
-                                      icon: Icon(Icons.remove),
+                                      icon: const Icon(Icons.remove),
                                       onPressed: () {
                                         provider.decrementQuantity(index);
                                       },
                                     ),
                                     Text(
-                                      provider.quantity.toString(),
-                                      style: TextStyle(
+                                      cartItem.units.toString(),
+                                      style: const TextStyle(
                                           fontWeight: FontWeight.bold,
                                           color: Colors.black),
                                     ),
                                     IconButton(
-                                      icon: Icon(Icons.add),
+                                      icon: const Icon(Icons.add),
                                       onPressed: () {
                                         provider.incrementQuantity(index);
                                       },
@@ -103,14 +118,14 @@ class _CartScreenState extends State<CartScreen> {
                                 ),
                               ],
                             ),
-                            Spacer(),
+                            const Spacer(),
                             Column(
                               children: [
                                 IconButton(
                                   onPressed: () {
                                     // provider.removeProduct(index);
                                   },
-                                  icon: Icon(
+                                  icon: const Icon(
                                     Icons.delete,
                                     color: Colors.red,
                                   ),

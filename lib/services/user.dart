@@ -3,8 +3,7 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:e_commerce_provider/model/user_model.dart';
-import 'package:e_commerce_provider/screens/constant.dart';
-import 'package:e_commerce_provider/utils/constants.dart';
+import 'package:e_commerce_provider/constanst/constants.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
 

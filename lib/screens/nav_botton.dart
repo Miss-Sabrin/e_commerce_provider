@@ -1,9 +1,12 @@
+import 'package:e_commerce_provider/constanst/constants.dart';
 import 'package:e_commerce_provider/screens/cart/cart.dart';
-import 'package:e_commerce_provider/screens/constant.dart';
 import 'package:e_commerce_provider/screens/favorite/favorite.dart';
 import 'package:e_commerce_provider/screens/home/home.dart';
+import 'package:e_commerce_provider/screens/order/order_screen.dart';
 import 'package:e_commerce_provider/screens/profile/profile.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:iconly/iconly.dart';
 
 class BottomNvbar extends StatefulWidget {
   const BottomNvbar({super.key});
@@ -19,7 +22,7 @@ class _BottomNvbarState extends State<BottomNvbar> {
     Home(),
     CartScreen(),
     Favorite(),
-    Profile(),
+    OrderScreen(),
     Scaffold(),
   ];
   @override
@@ -32,7 +35,7 @@ class _BottomNvbarState extends State<BottomNvbar> {
           });
         },
         shape: CircleBorder(),
-        child:  Icon(
+        child: Icon(
           Icons.home,
           color: Colors.white,
           size: 30,
@@ -91,17 +94,18 @@ class _BottomNvbarState extends State<BottomNvbar> {
                       cuttentIndex == 3 ? kprimarayColor : Colors.grey.shade400,
                 )),
             IconButton(
-                onPressed: () {
-                  setState(() {
-                    cuttentIndex = 4;
-                  });
-                },
-                icon: Icon(
-                  Icons.person,
-                  size: 30,
-                  color:
-                      cuttentIndex == 4 ? kprimarayColor : Colors.grey.shade400,
-                ))
+              onPressed: () {
+                setState(() {
+                  cuttentIndex = 4;
+                });
+              },
+              icon: Icon(
+                IconlyBroken.swap,
+                size: 30,
+                color:
+                    cuttentIndex == 4 ? kprimarayColor : Colors.grey.shade400,
+              ),
+            )
           ],
         ),
       ),

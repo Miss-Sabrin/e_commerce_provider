@@ -1,8 +1,10 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:after_layout/after_layout.dart';
 import 'package:e_commerce_provider/provider/category_provider.dart';
 import 'package:e_commerce_provider/provider/order_provider.dart';
+import 'package:e_commerce_provider/provider/payment_provider.dart';
 import 'package:e_commerce_provider/provider/product.dart';
 import 'package:e_commerce_provider/provider/user.dart';
 import 'package:e_commerce_provider/screens/category/category_view_page.dart';
@@ -215,11 +217,17 @@ class _HomeState extends State<Home> with AfterLayoutMixin {
   }
 
   @override
-  FutureOr<void> afterFirstLayout(BuildContext context) {
-    Provider.of<UserProvider>(context, listen: false).getUser();
+  FutureOr<void> afterFirstLayout(BuildContext context) async {
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+    await userProvider.getUser();
+    final userId = userProvider.user.id;
     Provider.of<ProductProvider>(context, listen: false).fetchAllProducts();
     Provider.of<CategoryProvider>(context, listen: false).fetchAllCategories();
-    Provider.of<OrderProvider>(context, listen: false)
-        .fetchOrderByUser('664de1f8a2b39d6990d807e4');
+    Provider.of<PaymentProvider>(context, listen: false).fetchAllPayments();
+    // if (userId!.isNotEmpty) {
+    //   log('User Id: $userId');
+    //   Provider.of<OrderProvider>(context, listen: false)
+    //       .fetchOrderByUser(userId);
+    // }
   }
 }
