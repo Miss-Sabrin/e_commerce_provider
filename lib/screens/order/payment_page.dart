@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:e_commerce_provider/constanst/constants.dart';
 import 'package:e_commerce_provider/model/Payment.dart';
 import 'package:e_commerce_provider/provider/order_provider.dart';
@@ -7,7 +5,6 @@ import 'package:e_commerce_provider/provider/payment_provider.dart';
 import 'package:e_commerce_provider/provider/user.dart';
 import 'package:e_commerce_provider/widget/custom_text_field.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
@@ -271,7 +268,8 @@ class _PaymentPageState extends State<PaymentPage> {
                           orderedProducts,
                           'Order',
                           0.1,
-                          int.parse(number.trim()),
+                          615480786
+                          //int.parse(number.trim()),
                         );
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(
