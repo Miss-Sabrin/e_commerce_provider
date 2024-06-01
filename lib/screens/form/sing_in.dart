@@ -2,7 +2,7 @@ import 'package:e_commerce_provider/provider/user.dart';
 
 
 import 'package:e_commerce_provider/screens/form/sing_up.dart';
-import 'package:e_commerce_provider/screens/nav_botton.dart';
+import 'package:e_commerce_provider/screens/bottom_navigations.dart';
 import 'package:e_commerce_provider/constanst/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';

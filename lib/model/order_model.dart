@@ -1,3 +1,5 @@
+import 'package:e_commerce_provider/model/product.dart';
+
 class Order {
   final String id;
   final String user;
@@ -143,7 +145,11 @@ class ProductDetails {
       price: json['price'] ?? 0,
       category: json['category'] ?? '',
       isTrending: json['isTrending'] ?? false,
-      photos: List<String>.from(json['photos'] ?? []),
+      // photos: List<String>.from(json['photos'] ?? []),
+      photos: json["photos"] == null
+          ? []
+          : List<String>.from(
+              json["photos"].map((x) => replaceLocalhostWithIP(x))),
       createdAt:
           DateTime.parse(json['createdAt'] ?? DateTime.now().toIso8601String()),
       updatedAt:

@@ -1,155 +1,155 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:e_commerce_provider/constanst/constants.dart';
+import 'package:e_commerce_provider/provider/user.dart';
+import 'package:e_commerce_provider/screens/form/sing_in.dart';
+import 'package:e_commerce_provider/screens/form/sing_up.dart';
+import 'package:e_commerce_provider/screens/profile/profile_update.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:insta_image_viewer/insta_image_viewer.dart';
+import 'package:page_transition/page_transition.dart';
+import 'package:provider/provider.dart';
 
-class Profile extends StatelessWidget {
+class Profile extends StatefulWidget {
   const Profile({super.key});
 
   @override
+  State<Profile> createState() => _ProfileState();
+}
+
+class _ProfileState extends State<Profile> {
+  @override
   Widget build(BuildContext context) {
- final size=MediaQuery.of(context).size;
- bool isPortrait=MediaQuery.of(context).orientation==Orientation.portrait;
-   //double screanHeight=MediaQuery.of(context).size.height;
-
     return Scaffold(
-      body: Stack(
-        children: [
-          Image.asset('images/profile3.png',
-           height: size.height/1,
-
-         
-          width:double.infinity,
-          fit: BoxFit.cover,
-          ),
-          Padding(padding: EdgeInsets.symmetric(horizontal: 9,vertical: 10),
-          child: Align(alignment: Alignment.bottomCenter,
-          
-          child: Card(
-            
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(15),
-              
-              ),
-              child: Expanded(
-                child: Container(
-                  height:isPortrait?  size.height *0.4:size.width/2,
-                  //width:isPortrait? size.width*0.5 :size.height/2,
-                  child: Padding(padding: EdgeInsets.symmetric(horizontal:8,vertical: 10),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Stack(
-                            children: [
-                              CircleAvatar(
-                                radius: 42,
-                                backgroundImage: AssetImage('images/profile3.png'),
-                              ),
-                              
-                              
-                            ],
-                          ),
-                          SizedBox(width: 40,),
-                          Row(
-                            children: [
-                              Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20),
-                                  border: Border.all(
-                                    color: Colors.black54,
-                                    
-                                  )
-                                  
-                                ),
-                                padding: EdgeInsets.symmetric(horizontal: 20,vertical: 5
-                                
-                                ),
-                                child: Text('Add Freind'),
-                              ),
-                              SizedBox(width: 20,),
-                              Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20),
-                                 color: Colors.red
-                                  
-                                ),
-                                padding: EdgeInsets.symmetric(horizontal: 20,vertical: 5
-                                
-                                ),
-                                child: Text('fllow',style: TextStyle(color: Colors.white,fontSize: 14,fontWeight: FontWeight.bold),),
-                              ),
-                            ],
-                          ),
-                        
-                          
-                        ],
-                      ),
-                        const SizedBox(height: 10,),
-                          Text('sabrin omar',style: TextStyle(
-                            fontSize: 25,
-                            fontWeight: FontWeight.bold
-                          ),),
-                           Text('fluuter devloper',style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black45
-                          ),),
-                          SizedBox(height: 15,),
-                          Text('flutter devlopre is a softwer engeenering who \n has perfomancy with the flutter from work to \n devlope mobile web ',
-                          style: TextStyle(fontSize: 16),
-                          ),
-                          Spacer(),
-                          
-                
-                    ],
+      appBar: AppBar(
+        backgroundColor: kprimarayColor,
+        centerTitle: true,
+        title: const Text(
+          'profile',
+          style: TextStyle(
+              color: kcontentColor, fontSize: 25, fontWeight: FontWeight.w600),
+        ),
+        actions: [
+          IconButton(
+              onPressed: () {
+                final box = GetStorage();
+                box.remove(kUserInfo);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const LoginScreen(),
                   ),
-                  
-                  
-                  ),
-                  
-                  
-                  
-                  
-                  
-                  ),
-              ),
-                
-              ),
-          ),
-          ),
-          
-          
-          
-          
-
+                );
+              },
+              icon: const Icon(
+                Icons.login,
+                size: 22,
+              ))
         ],
+      ),
+      body: SingleChildScrollView(
+        child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+            child: Consumer<UserProvider>(
+              builder: (context, cont, child) {
+                return Column(
+                  children: [
+                    const SizedBox(
+                      height: 50,
+                    ),
+                    InstaImageViewer(
+                      child: SizedBox(
+                        height: 100,
+                        width: 100,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(50),
+                          child: CachedNetworkImage(
+                            imageUrl: 
+                            // cont.user.photo ??
+                                "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
+                            placeholder: (context, url) =>
+                                const CircularProgressIndicator(),
+                            errorWidget: (context, url, error) =>
+                                const Icon(Icons.error),
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    itemProfile('Name', cont.user.name ?? "Rina",
+                        CupertinoIcons.person),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    itemProfile('userName', cont.user.username ?? "sabka",
+                        CupertinoIcons.phone),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    itemProfile('password', '',
+                        CupertinoIcons.location),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    // itemProfile(
+                    //     'email', "saabsiman080@gmail.com", CupertinoIcons.mail),
+                    // const SizedBox(
+                    //   height: 30,
+                    // ),
+                    Container(
+                      
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                          color: kprimarayColor,
+                          borderRadius: BorderRadius.circular(10)),
+                      child: TextButton(
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                PageTransition(
+                                    child: ProfileUpdate(
+                                      userModel: cont.user,
+                                    ),
+                                    type: PageTransitionType.fade));
+                          },
+                          child: Text(
+                            'Edit Profile',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold),
+                          )),
+                    )
+                  ],
+                );
+              },
+            )),
       ),
     );
   }
 
-  
-}
-
-SizedBox friendAndMore(title,number){
-  return SizedBox(
-    width: 110,
-    child: Column(
-      children: [
-        Text(title,style: 
-      TextStyle(
-        fontSize: 14,
-        fontWeight: FontWeight.bold,
-        color: Colors.black26
-      ),),
-       Text(number,style: 
-      TextStyle(
-        fontSize: 25,
-        fontWeight: FontWeight.bold,
-        color: Colors.black
-      ),)
-      
-      
-      ],
-    ),
-  );
+  itemProfile(String title, String subtitle, IconData iconData) {
+    return Container(
+      decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(10),
+          boxShadow: [
+            BoxShadow(
+                offset: Offset(0, 0.1),
+                color: kprimarayColor.withOpacity(.2),
+                spreadRadius: 1,
+                blurRadius: 3)
+          ]),
+      child: ListTile(
+        title: Text(title),
+        subtitle: Text(subtitle),
+        leading: Icon(iconData),
+        trailing: Icon(Icons.arrow_forward),
+        tileColor: Colors.white,
+      ),
+    );
+  }
 }

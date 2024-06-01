@@ -7,14 +7,17 @@ import 'package:flutter/material.dart';
 enum PaymentState { normal, loading, error, success }
 
 class PaymentProvider extends ChangeNotifier {
-  List<PaymentModel> payments = [];
+  List<PaymentModel> _payments = [];
+  List<PaymentModel> get payments => _payments;
   PaymentState state = PaymentState.normal;
 
   Future<void> fetchAllPayments() async {
     try {
+      if (payments.isNotEmpty) return;
+
       state = PaymentState.loading;
       notifyListeners();
-      payments = await PaymentServices().getAllPayments();
+      _payments = await PaymentServices().getAllPayments();
       state = PaymentState.success;
       notifyListeners();
     } catch (e) {

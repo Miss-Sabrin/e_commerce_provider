@@ -13,6 +13,7 @@ class UserProvider extends ChangeNotifier {
   UserModel user = UserModel();
   LoginState loginState = LoginState.normal;
   RegisterState registerState = RegisterState.normal;
+  RegisterState updateState = RegisterState.normal;
 
   final box = GetStorage();
   login({
@@ -63,6 +64,8 @@ class UserProvider extends ChangeNotifier {
       loginState = LoginState.error;
       if (onError != null) {
         onError(error.toString());
+        registerState = RegisterState.error;
+        notifyListeners();
       }
     }
   }
@@ -75,6 +78,41 @@ class UserProvider extends ChangeNotifier {
         var userId = user.id;
         print('UserId In side UserProvider: $userId');
         notifyListeners();
+      }
+    }
+  }
+
+  //todo update profile
+
+  updateProfile({
+    required String userId,
+    required String newName,
+    required String newUsername,
+    required String newPassword,
+    String? newPhoto,
+    Function(UserModel)? onSuccess,
+    Function(String)? onError,
+  }) async {
+    try {
+      //updateState = updateState.loading;
+      print('loading');
+      notifyListeners();
+      user = await UserServices().updateProfile(
+        userId: userId,
+        newName: newName,
+        newUsername: newUsername,
+        newPassword: newPassword,
+        newPhoto: newPhoto,
+      );
+      updateState = RegisterState.success;
+      notifyListeners();
+      if (onSuccess != null) {
+        onSuccess(user);
+      }
+    } catch (error) {
+      updateState = RegisterState.error;
+      if (onError != null) {
+        onError(error.toString());
       }
     }
   }

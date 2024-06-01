@@ -11,7 +11,7 @@ class OrderServices {
     final response = await http.get(Uri.parse('$kEndpoint/order/user/$userId'),
         headers: {HttpHeaders.contentTypeHeader: "application/json"});
 
-    log('orders: ${response.body}');
+    // log('orders: ${response.body}');
 
     if (response.statusCode == 200) {
       List<dynamic> body = jsonDecode(response.body);

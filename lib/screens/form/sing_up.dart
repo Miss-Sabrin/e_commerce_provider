@@ -1,7 +1,7 @@
 import 'package:e_commerce_provider/constanst/constants.dart';
 import 'package:e_commerce_provider/provider/user.dart';
 import 'package:e_commerce_provider/screens/form/sing_in.dart';
-import 'package:e_commerce_provider/screens/nav_botton.dart';
+import 'package:e_commerce_provider/screens/bottom_navigations.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -18,7 +18,6 @@ class _SignUpPageState extends State<SignUpPage> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     _nameController.dispose();
     _usernameController.dispose();
     _passwordController.dispose();
@@ -28,8 +27,6 @@ class _SignUpPageState extends State<SignUpPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //backgroundColor: kprimarayColor,
-      // appBar: AppBar(title: Text("Sign Up")),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -39,7 +36,6 @@ class _SignUpPageState extends State<SignUpPage> {
                 width: double.infinity,
                 height: 200,
                 decoration: BoxDecoration(
-                    //color: Colors.orange.shade50,
                     borderRadius: BorderRadius.only(
                         bottomLeft: Radius.circular(30),
                         bottomRight: Radius.circular(400))),
@@ -52,7 +48,7 @@ class _SignUpPageState extends State<SignUpPage> {
                         size: 100,
                       ),
                       Text(
-                        'sing up',
+                        'Sign Up',
                         style: TextStyle(
                             fontSize: 20, fontWeight: FontWeight.bold),
                       )
@@ -83,7 +79,7 @@ class _SignUpPageState extends State<SignUpPage> {
                             children: <Widget>[
                               buildTextField("Name", _nameController, false),
                               buildTextField(
-                                  "username", _usernameController, false),
+                                  "Username", _usernameController, false),
                               buildTextField(
                                   "Password", _passwordController, true),
                               SizedBox(height: 20),
@@ -91,36 +87,34 @@ class _SignUpPageState extends State<SignUpPage> {
                                   builder: (context, cont, child) {
                                 return Container(
                                   width: double.infinity,
-                                  //color: kprimarayColor,
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(20)),
                                   child: ElevatedButton(
                                     onPressed: () {
-                                      cont.registerState ==
-                                              RegisterState.loading
-                                          ? null
-                                          : () => cont.register(
-                                                name: _nameController.text,
-                                                password:
-                                                    _passwordController.text,
-                                                username:
-                                                    _usernameController.text,
-                                                onSuccess: (user) {
-                                                  _passwordController.clear();
-                                                },
-                                                onError: (eror) {
-                                                  ScaffoldMessenger.of(context)
-                                                      .showSnackBar(SnackBar(
-                                                          content: Text(eror
-                                                              .toString())));
-                                                },
-                                              );
-
                                       if (_formKey.currentState!.validate()) {
-                                        Navigator.of(context).pushReplacement(
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  BottomNvbar()),
+                                        cont.register(
+                                          name: _nameController.text,
+                                          password: _passwordController.text,
+                                          username: _usernameController.text,
+                                          onSuccess: (user) {
+                                            _passwordController.clear();
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(SnackBar(
+                                                    content: Text(
+                                                        'Registration successful')));
+                                            Navigator.of(context)
+                                                .pushReplacement(
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      LoginScreen()),
+                                            );
+                                          },
+                                          onError: (error) {
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(SnackBar(
+                                                    content: Text(
+                                                        error.toString())));
+                                          },
                                         );
                                       }
                                     },
@@ -161,7 +155,6 @@ class _SignUpPageState extends State<SignUpPage> {
       String label, TextEditingController controller, bool obscureText) {
     return Container(
       margin: EdgeInsets.only(bottom: 10),
-      decoration: BoxDecoration(),
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 10),
         child: TextFormField(

@@ -19,23 +19,28 @@ class CategoryViewPage extends StatelessWidget {
           ? const Center(child: CircularProgressIndicator())
           : productProvider.state == ProductState.error
               ? const Center(child: Text("Error fetching products"))
-              :  Center(
-                  child: SizedBox(
-                    child: ListView.builder(
-                      itemCount: productProvider.productsByCategory.length,
-                      itemBuilder: (context, index) {
-                        var product = productProvider.productsByCategory[index];
-                        return Padding(
-                          padding: const EdgeInsets.only(bottom: 10.0),
-                          child: InkWell(
-                            onTap: () {},
-                            child: CarUICard(product: product),
-                          ),
-                        );
-                      },
+              : productProvider.products.isEmpty
+                  ? const Center(
+                      child: Text('No Products in this category'),
+                    )
+                  : Center(
+                      child: SizedBox(
+                        child: ListView.builder(
+                          itemCount: productProvider.productsByCategory.length,
+                          itemBuilder: (context, index) {
+                            var product =
+                                productProvider.productsByCategory[index];
+                            return Padding(
+                              padding: const EdgeInsets.only(bottom: 10.0),
+                              child: InkWell(
+                                onTap: () {},
+                                child: CarUICard(product: product),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
                     ),
-                  ),
-                ),
     );
   }
 }

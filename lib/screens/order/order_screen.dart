@@ -35,7 +35,10 @@ class _OrderScreenState extends State<OrderScreen> with AfterLayoutMixin {
         title: const Text('My Orders'),
       ),
       body: orderProvider.state == OrderState.loading
-          ? const Center(child: CircularProgressIndicator())
+          ? ListView.builder(
+              itemCount: 5, // Number of shimmer cards to display
+              itemBuilder: (context, index) => const ShimmerOrderCard(),
+            )
           : orderProvider.state == OrderState.error
               ? const Center(child: Text('Error fetching orders'))
               : orders.isEmpty
@@ -44,7 +47,16 @@ class _OrderScreenState extends State<OrderScreen> with AfterLayoutMixin {
                       itemCount: orders.length,
                       itemBuilder: (context, index) {
                         final order = orders[index];
-                        return OrderCard(order: order);
+                        // Access the first photo of the first product in the order
+                        final photo = order.products.isNotEmpty &&
+                                order.products[0].product.photos.isNotEmpty
+                            ? order.products[0].product.photos[0]
+                            : 'default_image_url'; // Provide a default URL if no photo is available
+
+                        return OrderCard(
+                          order: order,
+                          photo: photo,
+                        );
                       },
                     ),
     );

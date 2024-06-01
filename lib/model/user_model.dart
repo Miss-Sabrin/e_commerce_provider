@@ -32,9 +32,13 @@ class UserModel {
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
-    String photoUrl = json['photo'].replaceFirst('localhost:7900', kApiUrl);
-    print('Original URL: ${json['photo']}');
-    print('Updated URL: $photoUrl');
+    String photoUrl = json['photo'].replaceFirst('localhost:7900', kEndpoint);
+    // String? photoUrl = json['photo'];
+    // if (photoUrl != null) {
+    //   photoUrl = photoUrl.replaceFirst('localhost:7900', kApiUrl);
+    // }
+    // print('Original URL: ${json['photo']}');
+    // print('Updated URL: $photoUrl');
 
     return UserModel(
       id: json["_id"],

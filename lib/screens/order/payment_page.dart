@@ -3,6 +3,7 @@ import 'package:e_commerce_provider/model/Payment.dart';
 import 'package:e_commerce_provider/provider/order_provider.dart';
 import 'package:e_commerce_provider/provider/payment_provider.dart';
 import 'package:e_commerce_provider/provider/user.dart';
+import 'package:e_commerce_provider/screens/home/home.dart';
 import 'package:e_commerce_provider/widget/custom_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -19,7 +20,7 @@ class PaymentPage extends StatefulWidget {
 }
 
 class _PaymentPageState extends State<PaymentPage> {
-  String selectedPaymentMethod = 'Paypal';
+  String selectedPaymentMethod = 'Select Payment';
   bool isEvcVisible = false;
   String paymentId = '';
   TextEditingController textEditingController = TextEditingController();
@@ -249,11 +250,17 @@ class _PaymentPageState extends State<PaymentPage> {
                         );
                       }
                       await orderProvider.createOrder(orderData);
+                      paymentProvider.payments.clear();
+                      orderProvider.fetchOrderByUser(userId!);
                       if (orderProvider.state == OrderState.success) {
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(
                               content: Text('Succesfull made an order✔️')),
                         );
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const Home()));
                       } else {
                         orderProvider.state = OrderState.error;
                         ScaffoldMessenger.of(context).showSnackBar(

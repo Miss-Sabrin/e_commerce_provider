@@ -4,14 +4,21 @@ import 'package:e_commerce_provider/model/product.dart';
 import 'package:e_commerce_provider/services/product.dart';
 import 'package:flutter/material.dart';
 
-
 enum ProductState { normal, loading, error, success, notFound }
 
 class ProductProvider extends ChangeNotifier {
   List<Product> products = [];
   List<Product> productsByCategory = [];
+  List<Product> searchResults = [];
   Product? selectedProduct;
   ProductState state = ProductState.normal;
+
+  void searchProducts(String query) {
+    searchResults = products.where((product) {
+      return product.name!.toLowerCase().contains(query.toLowerCase());
+    }).toList();
+    notifyListeners();
+  }
 
   Future<void> fetchAllProducts() async {
     try {

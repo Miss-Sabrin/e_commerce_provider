@@ -21,6 +21,7 @@ class OrderProvider extends ChangeNotifier {
       orders = userOrders;
       // _ordersFetched = true;
       state = OrderState.success;
+      notifyListeners();
       successMessage = 'Successfully made an order';
       notifyListeners();
     } catch (e) {

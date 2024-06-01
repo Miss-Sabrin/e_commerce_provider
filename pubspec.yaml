@@ -44,6 +44,15 @@ dependencies:
   get_storage: ^2.1.1
   iconly: ^1.0.1
   page_transition: ^2.1.0
+  badges: ^3.1.2
+  iconsax_flutter: ^1.0.0
+  carousel_slider: ^4.2.1
+  cached_network_image: ^3.3.1
+  sqflite: ^2.3.3+1
+  insta_image_viewer: ^1.0.4
+  shimmer: ^3.0.0
+  smooth_page_indicator: ^1.1.0
+  introduction_screen: ^3.1.14
 
 dev_dependencies:
   flutter_test:
@@ -69,12 +78,12 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - images/
-    - images/all/
-    - images/shoes/
-    - images/beauty/
-    - images/women fashion/
-    - images/men fashion/
-    - images/jewelry/
+    - images/boarding/
+    # - images/shoes/
+    # - images/beauty/
+    # - images/women fashion/
+    # - images/men fashion/
+    # - images/jewelry/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

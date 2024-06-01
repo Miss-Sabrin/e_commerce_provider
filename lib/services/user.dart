@@ -34,15 +34,16 @@ class UserServices {
   }
 
   ///todo register
-  Future<UserModel> register(
-      {required String name,
-      required String username,
-      required String password,
-      String? photo}) async {
+  Future<UserModel> register({
+    required String name,
+    required String username,
+    required String password,
+    String? photo,
+  }) async {
     var data = {
+      "name": name,
       "username": username,
       "password": password,
-      "name": name,
       "photo": photo
     };
     var response = await http.post(Uri.parse("$kEndpoint/user/register"),
@@ -52,6 +53,35 @@ class UserServices {
       final json = jsonDecode(response.body);
       log(json.toString());
       await saveUser(UserModel.fromJson(json["data"]));
+      return UserModel.fromJson(json["data"]);
+    } else {
+      final json = jsonDecode(response.body);
+      throw json["error"];
+    }
+  }
+
+  //todo update user 😋
+
+  Future<UserModel> updateProfile({
+    required String userId,
+    required String newName,
+    required String newUsername,
+    required String newPassword,
+    String? newPhoto,
+  }) async {
+    var data = {
+      "name": newName,
+      "username": newUsername,
+      "password": newPassword,
+      "photo": newPhoto,
+    };
+    var response = await http.put(
+      Uri.parse("$kEndpoint/user/update/$userId"),
+      body: jsonEncode(data),
+      headers: {HttpHeaders.contentTypeHeader: "application/json"},
+    );
+    if (response.statusCode == 200) {
+      final json = jsonDecode(response.body);
       return UserModel.fromJson(json["data"]);
     } else {
       final json = jsonDecode(response.body);
